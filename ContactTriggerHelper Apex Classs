@@ -1,0 +1,52 @@
+
+
+public class ContactTriggerHelper{
+
+
+           public void InsertMethod(List<Contact> newContactList , List<Contact> oldContactList){
+           
+           Set<Id> AccIdSet=new Set<Id>();
+           List<Account> accList=new List<Account>();
+           Map<Id,Integer> ContactMap=new Map<Id,Integer>();
+           List<Account> UpdateaccList=new List<Account>();
+           for(contact c:newContactList){
+               AccIdSet.add(c.AccountId);         
+               }
+           accList=[Select Id,Name,(Select Id,FirstName,LastName from Contacts) from Account where Id In:AccIdSet];     
+           for(Account acc : accList){
+           acc.Number_of_Contacts__c=acc.contacts.size();   
+           UpdateaccList.add(acc);      
+           }    
+           try{
+           if(UpdateaccList.size()>0){
+           update UpdateaccList;    
+           }
+           } catch (exception e){
+           system.debug('exception e------->'+e);
+           }
+           }
+           public void DeleteMethod(List<Contact> newContactList,List<Contact> oldContactList){
+           
+           Set<Id> AccIdSet=new Set<Id>();
+           List<Account> accList=new List<Account>();
+           Map<Id,Integer> ContactMap=new Map<Id,Integer>();
+           List<Account> UpdateaccList=new List<Account>();
+           for(contact c: oldContactList){
+               AccIdSet.add(c.AccountId);         
+               }
+           accList=[Select Id,Name,(Select Id,FirstName,LastName from Contacts) from Account where Id In:AccIdSet];     
+           for(Account acc : accList){
+           acc.Number_of_Contacts__c=acc.contacts.size();   
+           UpdateaccList.add(acc);      
+           }    
+           try{
+           if(UpdateaccList.size()>0){
+           update UpdateaccList;    
+           }
+           } catch (exception e){
+           system.debug('Exception -------->'+e);
+           }
+           
+           }
+           
+}
