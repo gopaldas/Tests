@@ -1,0 +1,11 @@
+public class MostRecentCreatedAccountHelper {
+           @AuraEnabled
+           Public static List<Account> accListMethod(){
+           List<Account> accList=[Select Id,Name,Industry,Phone,Website from Account ORDER BY CreatedDate DESC LIMIT 10];
+           
+           return accList;
+           }
+
+
+
+}
