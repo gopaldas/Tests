@@ -1,0 +1,12 @@
+trigger ContactTrigger on Contact (after Insert, after Delete) {
+
+   if(trigger.isAfter && trigger.isInsert){
+     ContactTriggerHelper contactHelper=new ContactTriggerHelper();
+     contactHelper.InsertMethod(trigger.new,trigger.old);
+   } 
+   if(trigger.isAfter && trigger.isDelete){
+     ContactTriggerHelper contactHelper=new ContactTriggerHelper();
+     contactHelper.DeleteMethod(trigger.new,trigger.old); 
+   }
+
+}
